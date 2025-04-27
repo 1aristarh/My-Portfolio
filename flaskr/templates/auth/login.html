@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block header %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Login</h1>
+            <p class="subtitle">Get access the portfolio</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-card">
+            <form method="post" class="auth-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" name="username" id="username" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" name="password" id="password" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Log In
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

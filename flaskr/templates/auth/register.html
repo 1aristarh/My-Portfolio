@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block header %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Create your Account</h1>
+            <p class="subtitle">Register to get access to the portfolio</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-card">
+            <form method="post" class="auth-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" name="username" id="username" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" name="password" id="password" class="form-input" 
+                           required minlength="8" 
+                           placeholder="Minimum 8 characters with at least 1 uppercase letter">
+                    <small class="form-help">
+                        <i class="fas fa-info-circle"></i> Password must be at least 8 characters long and contain at least one uppercase letter.
+                    </small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="{{ url_for('auth.login') }}">Log In</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('password');
+    const feedbackElement = document.createElement('div');
+    feedbackElement.className = 'password-feedback';
+    passwordInput.parentNode.insertBefore(feedbackElement, passwordInput.nextSibling);
+    
+    passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        let feedback = '';
+        
+        if (password.length < 8) {
+            feedback += '<span class="invalid"><i class="fas fa-times-circle"></i> At least 8 characters</span>';
+        } else {
+            feedback += '<span class="valid"><i class="fas fa-check-circle"></i> At least 8 characters</span>';
+        }
+        
+        feedback += ' | ';
+        
+        if (!/[A-Z]/.test(password)) {
+            feedback += '<span class="invalid"><i class="fas fa-times-circle"></i> At least one uppercase letter</span>';
+        } else {
+            feedback += '<span class="valid"><i class="fas fa-check-circle"></i> At least one uppercase letter</span>';
+        }
+        
+        feedbackElement.innerHTML = feedback;
+    });
+});
+</script>
+{% endblock %}

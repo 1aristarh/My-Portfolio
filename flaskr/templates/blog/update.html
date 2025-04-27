@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit "{{ post['title'] }}"{% endblock %}
+
+{% block header %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Edit Project</h1>
+            <p class="subtitle">Update "{{ post['title'] }}"</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <div class="container">
+        <form method="post" class="project-form">
+            <div class="form-group">
+                <label for="title" class="form-label">
+                    <i class="fas fa-heading"></i> Project Title
+                </label>
+                <input type="text" name="title" id="title" 
+                       class="form-input" 
+                       value="{{ request.form['title'] or post['title'] }}" 
+                       required>
+            </div>
+            
+            <div class="form-group">
+                <label for="youtube_id" class="form-label">
+                    <i class="fab fa-youtube"></i> YouTube Video ID (optional)
+                </label>
+                <input type="text" name="youtube_id" id="youtube_id" 
+                    class="form-input" 
+                    placeholder="e.g. dQw4w9WgXcQ"
+                    value="{{ request.form['youtube_id'] or post['youtube_id'] or '' }}">
+                    <small class="form-help">Enter only the ID part from YouTube URL (e.g., from https://www.youtube.com/watch?v=dQw4w9WgXcQ, enter only dQw4w9WgXcQ)</small>
+            </div>
+
+            <div class="form-group">
+                <label for="body" class="form-label">
+                    <i class="fas fa-align-left"></i> Project Description
+                </label>
+                <textarea name="body" id="body" 
+                          class="form-textarea" 
+                          rows="8">{{ request.form['body'] or post['body'] }}</textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="{{ url_for('blog.index') }}" class="btn btn-outline">
+                    Cancel
+                </a>
+            </div>
+        </form>
+        
+        <div class="danger-zone">
+            <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+            <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post" 
+                  onsubmit="return confirm('Are you sure you want to delete this project? This action cannot be undone.');">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i> Delete Project
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

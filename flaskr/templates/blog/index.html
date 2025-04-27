@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>My Professional Portfolio</h1>
+            <p class="subtitle">Showcasing my best work and projects</p>
+            <div class="hero-actions">
+                <a href="{{ url_for('blog.posts') }}" class="btn btn-primary">View My Work</a>
+                {% if g.user and g.user['role'] == 'admin' %}
+                <a href="{{ url_for('blog.create') }}" class="btn btn-outline">Add New Project</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="featured-project-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Project</h2>
+            <p>My most recent work</p>
+        </div>
+        
+        {% if featured_project %}
+        <div class="featured-project-container">
+            <h3 class="featured-title">{{ featured_project['title'] }}</h3>
+            <div class="featured-meta">
+                <span class="featured-date">
+                    <i class="far fa-calendar-alt"></i> 
+                    {{ featured_project['created'].strftime('%B %d, %Y') }}
+                </span>
+            </div>
+            
+            {% if featured_project['youtube_id'] %}
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/{{ featured_project['youtube_id'] }}" 
+                    title="YouTube video" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            {% endif %}
+            
+            <div class="featured-body">
+                {{ featured_project['body']|safe }}
+            </div>
+            
+            <div class="featured-actions">
+                <a href="{{ url_for('blog.post', id=featured_project['id']) }}" class="btn btn-primary">
+                    <i class="fas fa-eye"></i> View Full Project
+                </a>
+                {% if g.user and g.user['role'] == 'admin' %}
+                <a href="{{ url_for('blog.update', id=featured_project['id']) }}" class="btn btn-outline">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="no-projects">
+            <p>No projects yet. {% if g.user and g.user['role'] == 'admin' %}<a href="{{ url_for('blog.create') }}">Create your first project</a>{% endif %}</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <h2>About Me</h2>
+            <p>I'm a professional specializing in my field with extensive experience and a passion for creating high-quality work. This portfolio represents my skills, experience, and the value I can bring to projects.</p>
+            
+            <div class="skills">
+                <h3>My Skills</h3>
+                <ul class="skills-list">
+                    <li>Teamwork</li>
+                    <li>Critical Thinking</li>
+                    <li>Desire to Know</li>
+                    <li>Problem Solving</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

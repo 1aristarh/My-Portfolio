@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}New Project{% endblock %}
+
+{% block header %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Create New Project</h1>
+            <p class="subtitle">Add a new project to your portfolio</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <div class="container">
+        <form method="post" class="project-form">
+            <div class="form-group">
+                <label for="title" class="form-label">
+                    <i class="fas fa-heading"></i> Project Title
+                </label>
+                <input type="text" name="title" id="title" 
+                       class="form-input" 
+                       value="{{ request.form['title'] }}" 
+                       required>
+            </div>
+            
+            <div class="form-group">
+                <label for="youtube_id" class="form-label">
+                    <i class="fab fa-youtube"></i> YouTube Video ID (optional)
+                </label>
+                <input type="text" name="youtube_id" id="youtube_id" 
+                    class="form-input" 
+                    placeholder="e.g. dQw4w9WgXcQ"
+                    value="{{ request.form['youtube_id'] or '' }}">
+                <small class="form-help">Enter only the ID part from YouTube URL (e.g., from https://www.youtube.com/watch?v=dQw4w9WgXcQ, enter only dQw4w9WgXcQ)</small>
+            </div>
+
+            <div class="form-group">
+                <label for="body" class="form-label">
+                    <i class="fas fa-align-left"></i> Project Description
+                </label>
+                <textarea name="body" id="body" 
+                          class="form-textarea" 
+                          rows="8">{{ request.form['body'] }}</textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Project
+                </button>
+                <a href="{{ url_for('blog.index') }}" class="btn btn-outline">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
