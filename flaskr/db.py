@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import datetime
 import click
+from flask.cli import with_appcontext
 from flask import current_app, g
 import os
 
@@ -45,6 +46,7 @@ def init_db():
                 raise
 
 @click.command('init-db')
+@with_appcontext
 def init_db_command():
     """Clear the existing data and create new tables."""
     # Delete existing database file

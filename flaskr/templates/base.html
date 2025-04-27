@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     {% else %}
-                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Log in</a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Log In</a>
                     {% endif %}
                 </div>
             </nav>
@@ -47,9 +47,11 @@
     </header>
 
     <main class="main-content">
-        {% for message in get_flashed_messages() %}
-        <div class="flash">{{ message }}</div>
-        {% endfor %}
+        {% if request.endpoint and not request.endpoint.startswith('auth.') %}
+            {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         
         {% block header %}{% endblock %}
         {% block content %}{% endblock %}

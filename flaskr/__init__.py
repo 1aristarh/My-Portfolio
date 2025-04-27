@@ -6,8 +6,12 @@ from flask import Flask
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    
+    # Get secret key from environment variable or use 'dev' for development
+    secret_key = os.environ.get('FLASK_SECRET_KEY', 'dev')
+    
     app.config.from_mapping(
-        SECRET_KEY='dev',
+        SECRET_KEY=secret_key,
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
 

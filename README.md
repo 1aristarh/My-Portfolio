@@ -23,22 +23,35 @@ A Flask-based portfolio web application with user authentication and project man
    pip install -e .
    ```
 
-3. Initialize the database:
+3. Set environment variables:
+   - Copy `.env.example` to `.env`
+   - Modify `.env` with your settings
+   - Load environment variables:
+     ```
+     # On Windows
+     set FLASK_SECRET_KEY=your-secure-secret-key
+     
+     # On macOS/Linux
+     export FLASK_SECRET_KEY=your-secure-secret-key
+     ```
+   - For production, set a strong, randomly generated secret key
+
+4. Initialize the database:
    ```
    flask --app flaskr init-db
    ```
 
-4. Create an admin user:
+5. Create an admin user:
    ```
    flask --app flaskr create-admin <username>
    ```
 
-5. Run the application:
+6. Run the application:
    ```
    flask --app flaskr run --debug
    ```
 
-6. Visit http://127.0.0.1:5000 in your browser
+7. Visit http://127.0.0.1:5000 in your browser
 
 ## Project Structure
 
@@ -50,6 +63,12 @@ A Flask-based portfolio web application with user authentication and project man
   - `blog.py` - Portfolio routes
   - `db.py` - Database functions
   - `schema.sql` - Database schema
+
+## Security Notes
+
+- Always use a strong, unique secret key in production
+- Never commit your `.env` file or secret keys to version control
+- In production, set environment variables through your hosting platform
 
 ## License
 

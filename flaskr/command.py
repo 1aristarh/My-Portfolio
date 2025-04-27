@@ -1,22 +1,26 @@
 # flaskr/commands.py
 import click
 from werkzeug.security import generate_password_hash
-from flask.cli import with_appcontext  # <-- Add this
+from flask.cli import with_appcontext
 from flaskr.db import get_db
+import getpass  # Import at module level for patching during testing
 
-@click.command('create-admin')  # <-- Simple @click.command, no current_app
+def get_password(prompt="Enter password: "):
+    """Wrapper function for getpass.getpass to make testing easier"""
+    return getpass.getpass(prompt)
+
+@click.command('create-admin')
 @click.argument('username')
-@with_appcontext  # <-- This provides the app context when command runsflask
+@with_appcontext
 def create_admin(username):
     """Create an admin user."""
-    from getpass import getpass
     db = get_db()
     
-    password = getpass("Enter password: ")
-    confirm = getpass("Confirm password: ")
+    password = get_password("Enter password: ")
+    confirm = get_password("Confirm password: ")
     
     if password != confirm:
-        click.echo("Passwords don't match!")  # Better than print()
+        click.echo("Passwords don't match!")
         return
     
     try:
